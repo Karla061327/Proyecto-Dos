@@ -1,0 +1,21 @@
+Proyecto Nodejs
+
+1. El proyecto se debe crear con el nombre project-webhook-github en GitHub.
+2. Se debe crear un webhook con el repositorio creado.
+3. La idea es construir un visualizador de eventos de GitHub.
+4. El proyecto debe contar con autenticación, login y registro.
+5. Las pantallas para login, registo y listado de eventos se van a proveer como archivos html.
+6. Los eventos se deben guardar en base de datos junto a los usuarios.
+7. Los procesos de login y registro deben tener todas las validaciones necesarias y mostrar message de error en caso de que falle la petición.
+8. Las peticiones de visualización de eventos sólo pueden ser realizadas por usuarios autenticados, así que deben incluir un token de autenticación.
+8. Para la pantalla de visualización de eventos, estos se pueden mostrar en su totalidad o filtrar por el tipo de evento o por autor
+
+
+Eventos de Github
+- comentarios en PR
+- creación de PR
+- creación de ramas
+- eliminación de ramas
+- cambio en los colaboradores
+- push x
+- star x
