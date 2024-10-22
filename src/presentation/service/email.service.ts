@@ -4,7 +4,7 @@ import { env } from "process";
 export interface SendMailOptions {
     to: string | string[];
     subject: string;
-    htmlBody?: string;
+    htmlBody: string;
     //TODO attachment
 }
 
