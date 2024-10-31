@@ -6,12 +6,8 @@ import { AuthController } from './presentation/auth/controller';
 import { MongoDataBase } from './data/mongo/mongo-connection';
 import { ServiceAuth } from './presentation/auth/user.auth';
 import { EventService } from './presentation/github/event.auth';
+import cors from 'cors';
 
-// {"name":"karla",
-//     "email": "kp.marin10@gmail.com",
-//     "password":"1234567"
-//     }
-//validar tokeb, pagincion, resto de eventos, filtro
 (async()=> {
     main();
 })();
@@ -23,6 +19,7 @@ async function main (){
 
     //crear aplicacion express
     const app = express();
+
     
     const eventService = new EventService();
     //controla los eventos de Guthub
@@ -33,6 +30,7 @@ async function main (){
     const controllerAuth = new AuthController(serviceAuth);
 
     app.use(express.json());
+    app.use(cors());
 
     //USER
     app.post('/register', controllerAuth.registerUserAuth);  

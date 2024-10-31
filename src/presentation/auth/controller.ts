@@ -37,10 +37,9 @@ export class AuthController {
 
         try {
             await this.serviceAuth.loginUser(loginDto!)
-            res.status(200).json('Loguido')
+            res.status(200).json('Success log')
+
         } catch (error) {
-            console.log(error);
-            
             res.status(400).json((error as Error).message);
         }
        
