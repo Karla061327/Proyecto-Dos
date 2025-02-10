@@ -1,9 +1,11 @@
+import { query } from "express";
 
 export class PaginationDTO {
 
     constructor(
         public readonly page: number,
         public readonly limit: number,
+        //public readonly query: any 
     ){}
 
     static create (page:number = 1, limit:number = 10):[string?, PaginationDTO?]{

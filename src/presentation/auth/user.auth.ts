@@ -3,7 +3,6 @@ import { UserRegisterDto, LoginUserDto } from "../../domain/dtos/auth/index";
 import { UserModel } from "../../data/mongo/user.model.mongo";
 import { bcryptAdapter, envs,jwtAdapter } from "../../config";
 import { EmailService } from "../service/email.service";
-import { log } from "console";
 
 export class ServiceAuth {
 
@@ -21,8 +20,8 @@ export class ServiceAuth {
             //hash de la contraseña
             newUser.password = bcryptAdapter.hash(userRegisterDto.password)
             newUser.save()
-            
-           this.sendValidated(newUser.email!)
+
+            this.sendValidated(newUser.email!)
       
     }
 
@@ -48,14 +47,14 @@ export class ServiceAuth {
             token: token
         }
     }
-
+    
     public sendValidated = async (email: string) => {
         
         //TODO no entiendo el que necesite el email
         //generar token,
         const token = await jwtAdapter.generateToken({email})    
         //await jwtAdapter.generateToken({id: user.id})
-        
+    
         const link = `${envs.WEBSERVICE_URL}/email-validate:TOKEN:${token}`;
 
         const html = `<h1>Validate your email</h1>

@@ -3,13 +3,12 @@ import { CustomError } from "../../domain/custom.error";
 import { UserModel } from "../../data/mongo/user.model.mongo";
 import { ServiceAuth } from "./index";
 import { LoginUserDto, UserRegisterDto} from "../../domain/dtos/auth";
-import { json } from "stream/consumers";
 
 export class AuthController {
 
     constructor(
         private readonly serviceAuth:ServiceAuth,
-       // private readonly emailService:EmailService
+        //private readonly emailService:EmailService
     ){}
 
     registerUserAuth = async (req:Request, res: Response) => {
@@ -23,10 +22,9 @@ export class AuthController {
             return res.status(201).json(registerDto);
 
             //enviar email 
-
         } catch(err){
             res.status(400).json((err as Error).message)
-        }
+        } 
     }
 
    loginUserAuth = async (req:Request, res: Response) => {
@@ -41,15 +39,13 @@ export class AuthController {
 
         } catch (error) {
             res.status(400).json((error as Error).message);
-        }
-       
-        
+        }     
     }
     
     reSendEmail = async (req:Request, res: Response) => {
 
         try {
-            
+    
             if (!req.body.email) throw CustomError.badRequest('Email is required');
 
             const userMongo = await UserModel.findOne({email:req.body.email});

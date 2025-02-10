@@ -4,7 +4,6 @@ import { EventModel } from "./event.model";
 import { CustomError } from "../../domain/custom.error";
 import { PaginationDTO } from "../../domain/dtos/pagination.dto";
 
-
 export class GithubController {
 
     constructor(
@@ -17,8 +16,8 @@ export class GithubController {
             const payload = req.body.repository;
           
             const githubEvent = req.header('x-github-event') ?? 'unknown';
- 
-            const newEvent = await EventModel.create({author: payload.full_name, id: payload.id, eventType: githubEvent});
+            const newEvent = await EventModel.create({author: payload.full_name, id: payload.id, eventType: githubEvent, date: payload.created_at});
+
             newEvent.save()
 
             res.status(202).send('accepted');
@@ -28,16 +27,14 @@ export class GithubController {
     }
 
     GetAllEvents = async (req: Request, res:Response) => {
-       
-        const {page=1, limit=10} = req.query;
 
+        const {page=1, limit=10, query=""} = req.query;
         const [error, paginationDTO] = PaginationDTO.create(+page, +limit)
         if (error) return res.status(410).json({error});
-
+        
         try {
             const token = req.headers.token;
-    
-            
+
             if (!token || typeof token !== 'string') throw CustomError.badRequest('Token is mandatory');
 
             const validated = await this.eventService.validatedToken(token!);
@@ -52,12 +49,17 @@ export class GithubController {
     }
 
     GetByEvent = async(req: Request, res: Response) => {
+
         const {token} = req.params;
+        const {page=1, limit=10, query=""} = req.query;
+        const [error, paginationDTO] = PaginationDTO.create(+page, +limit)
+
+        if (error) return res.status(410).json({error});
 
         try {
             const event = req.params.event
-            const events = await this.eventService.getEventByEvent(event)
-            console.log(events);
+            const events = await this.eventService.getEventByEvent(event, paginationDTO!)
+
             res.status(200).json(events)
         } catch (error) {
             res.status(400).json(error)

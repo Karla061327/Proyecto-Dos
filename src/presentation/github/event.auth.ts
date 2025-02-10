@@ -1,3 +1,4 @@
+
 import { jwtAdapter } from "../../config";
 import { CustomError } from "../../domain/custom.error";
 import { PaginationDTO } from "../../domain/dtos/pagination.dto";
@@ -19,8 +20,8 @@ export class EventService {
         
         try {
             const events = await EventModel.find()
-            .skip((page -1 )* limit)
-            .limit(limit)
+            
+            
 
             return events
 
@@ -30,10 +31,16 @@ export class EventService {
         }
     }
 
-    public async getEventByEvent(eventType: String){
+    public async getEventByEvent(eventType: String, paginationDTO: PaginationDTO){
+        
+        const {page, limit} = paginationDTO;
+        
         try {
-           const type = await EventModel.find({eventType:eventType});
-           return type
+           const type = await EventModel.find({eventType:eventType})
+            .skip((page -1 )* limit)
+            .limit(limit)
+
+            return type
 
         } catch (error) {
             console.log(error);

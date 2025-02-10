@@ -11,7 +11,12 @@ const EventSchema = new mongoose.Schema({
     author: {
         type: String,
         require: true
-    }    
+    },   
+    
+    date: {
+        type: Date,
+        require: true
+    }
 })
 
 export const EventModel = mongoose.model('Event', EventSchema)
